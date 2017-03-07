@@ -4,7 +4,10 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>CEDSCI Sunshine Talk</title>
+
+		<meta name="description" content="CEDSCI - where are we coming from and where are we going?">
+		<meta name="author" content="Zach Whitman">
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
@@ -24,8 +27,173 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+
+				<section>
+					<!-- <h1>CEDSCI</h1> -->
+					<h2>Census Data Dissemination Strategy</h2>
+					<!-- <h5>Center for Enterprise Dissemination Services and Consumer Innovation</h5> -->
+					<p>Zach Whitman</p>
+					<p>CDO</p>
+				</section>
+
+				<section>
+					<section>
+						First things first - what are the challenges?
+					</section>
+					<section>
+						We have a lot of apps <br> (approx 32...)
+					</section>
+					<section>
+						A lot of apps means a lot of interfaces
+						<img src="img/lots-of-apps.png" alt="app examples">
+					</section>
+					<section>
+						and I don't just mean graphical user interfaces
+					<pre><code class="hljs" data-trim contenteditable>
+						api.census.gov/data/2016/pep/population?
+							get=POP,GEONAME
+							&
+							for=region:*&DATE=9
+							&
+							key=YOUR_KEY
+					</code></pre>
+					<pre><code class="hljs" data-trim contenteditable>
+						import requests
+						from requests.auth import HTTPBasicAuth
+
+						apikey = "your_api_key"
+						request_url = "http://citysdk.commerce.gov"
+
+						request_obj = {
+						  'zip': '21401',
+						  'state': 'MD',
+						  'level': 'state',
+						  'sublevel': False,
+						  'api': 'acs5',
+						  'year': 2010,
+						  'variables': ['income', 'population']
+						}
+
+						response = requests.post(request_url, auth=HTTPBasicAuth(apikey, None), json=request_obj)
+
+						print response.json()
+					</code></pre>
+					</section>
+					<section>
+						<p>and a lot of these apps have their own update cycle</p>
+					</section>
+					<section>
+						<p>which means they can get out of sync</p>
+					</section>
+					<section>
+						which makes maintainence and quality assurance hard
+					</section>
+					<section>
+						We also tend to arrange our data based on Census structure
+					</section>
+					<section>
+						which makes it hard for folks to know what we have and where to find it
+					</section>
+				</section>
+
+				<section>
+					<section>
+						So what are we doing about it?
+					</section>
+					<section>
+						We're starting by looking at our data from our users' perspective
+					</section>
+					<section>
+						That's cool. What does that mean?
+					</section>
+					<section>
+						First - the data needs to be discoverable
+					</section>
+					<section>
+						Second - it needs to be understandable
+					</section>
+					<section>
+						And third - it needs to be extensible
+					</section>
+				</section>
+
+				<section>
+					<section>
+						How are we approaching these challenges?
+					</section>
+					<section>
+						we're beginning with a flexible, centralized infrastructure
+						<br>
+					<pre><code class="hljs" data-trim contenteditable>
+					url: http://data.census.gov/api/endpoints/args
+					{
+					  "services":
+				      [
+					      "endpoints",
+					      "facets",
+					      "locations",
+					      "search",
+					      "states",
+					      "tablemetadata",
+					      "tables",
+					      "typeahead",
+					      "validgeos"
+					     ],
+					     message: "***Welcome to the CEDSCI API***"
+					}
+					</code></pre>
+					</section>
+					<section>
+						then building a front-end to prove it out
+						<img src="img/search-bar.png" alt="single search bar">
+					</section>
+					<section>
+						so what's the idea here?
+					</section>
+					<section>
+						if we can do it, they can do it better
+					</section>
+				</section>
+
+				<section>
+					<section>
+						What's the rough idea?
+					</section>
+					<section data-background-iframe="https://zwhitman.github.io/cedsci-comm-demo/"></section>
+					<section data-background-iframe="https://zwhitman.github.io/cedsci-comm-demo/results.html"></section>
+					<section data-background-iframe="https://zwhitman.github.io/cedsci-comm-demo/map-results.html"></section>
+					<section data-background-iframe="https://zwhitman.github.io/cedsci-comm-demo/map-theme.html"></section>
+					<section>
+						where we are today
+					</section>
+					<section>
+						<p style='text-decoration:underline'>prototypes</p>
+						<ul>
+							<li>data services interface</li>
+							<li>single search bar</li>
+							<li>table result set</li>
+							<li>table interface</li>
+							<li>basic mapping capabilities</li>
+						</ul>
+					</section>
+					<section>
+						<a href="https://data.census.gov" target="_blank">quick demo</a>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						How does this all fit together?
+					</section>
+					<section  data-background-image="img/arch.png" data-background-size="auto 100%"></section>
+				</section>
+				<section>
+					<section>
+						where else are we going?
+					</section>
+					<section  data-background-image="img/data-landing.png" data-background-size="auto 100%"></section>
+				</section>
+
 			</div>
 		</div>
 
